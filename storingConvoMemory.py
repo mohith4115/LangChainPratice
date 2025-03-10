@@ -6,10 +6,11 @@ from langchain_core.prompts import PromptTemplate
 from dotenv import load_dotenv
 
 template = """
-    you are a sr software developer give me code for {secnario}
+    this is the "conversation history : {history}
+    you are a sr software developer give me code for {scenario}
 """
 
-prompt = PromptTemplate(template=template,input_variables=["secnario"])
+prompt = PromptTemplate(template=template,input_variables=["history","scenario"])
 
 load_dotenv()
 
@@ -26,12 +27,12 @@ memory = ConversationBufferMemory()
 chain = ConversationChain(llm=llm,memory=memory,prompt=prompt,verbose=True)
 
 
-res1 = chain.invoke(input={"secnario":"write python program for finding a prime number"})
+res1 = chain.invoke(input={"scenario":"write python program for finding a prime number"})
 print(res1)
-res2 = chain.invoke(input={"secnario":"write python program for finding a amstrong number"})
+res2 = chain.invoke(input={"scenario":"write python program for finding a amstrong number"})
 print(res2)
 
-res3 = chain.invoke(input={"secnairo":"write a c program for adding 2 numbers and give me the programing language name i asked you to write prime number code in"})
+res3 = chain.invoke(input={"scenario":"write a c program for adding 2 numbers and give me the programing language name i asked you to write prime number code in"})
 print(res3)
 
 print(memory.buffer)
