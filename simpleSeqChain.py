@@ -19,16 +19,19 @@ product = "a device to play racing games"
 
 template1 = "give a good name for this company that makes this {product}"
 
-template2 = "give me the description of the company in 20 words"
+template2 = "give me the description of the company {input} in 20 words"
 
-prompt1 = ChatPromptTemplate(template_format=template1)
+prompt1 = ChatPromptTemplate.from_template(template1)
 
-prompt2 = ChatPromptTemplate(template_format=template2)
+prompt2 = ChatPromptTemplate.from_template(template2)
 
 chain1 = prompt1 | llm
 chain2 = prompt2 | llm
 
-overall_chain = SimpleSequentialChain(chains=[chain1,chain2],
-                                      verbose=True)
+#deprecated 
+# overall_chain = SimpleSequentialChain(chains=[chain1,chain2],
+#                                       verbose=True)
 
-overall_chain.run(product)
+overall_chain = chain1 | chain2
+res = overall_chain.invoke({"product":product})
+print(res.content)
