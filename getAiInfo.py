@@ -1,4 +1,4 @@
-from langchain_openai import AzureOpenAI, ChatOpenAI
+from langchain_openai import AzureChatOpenAI, ChatOpenAI
 from langchain_core.prompts import PromptTemplate
 import os
 from dotenv import load_dotenv
@@ -21,9 +21,9 @@ load_dotenv()
 # )
 
 #when connecting to a deployed model in azure
-llm = AzureOpenAI(
+llm = AzureChatOpenAI(
     azure_endpoint=os.getenv("BASE_URL"),
-    api_key=os.getenv("OPEN_API_KEY"),
+    api_key=os.getenv("OPENAI_API_KEY"),
     temperature=0,
     model=os.getenv("MODEL_NAME"),
     api_version=os.getenv("api_version"),
@@ -32,4 +32,5 @@ llm = AzureOpenAI(
 
 chain = prompt | llm
 
-chain.invoke(input = {"tool":"langfuse","example":"in context of refining an input jaava code"})
+res = chain.invoke(input = {"tool":"langfuse","example":"in context of refining an input jaava code"})
+print(res)
