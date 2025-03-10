@@ -7,10 +7,10 @@ from dotenv import load_dotenv
 
 template = """
     this is the "conversation history : {history}
-    you are a sr software developer give me code for {scenario}
+    you are a sr software developer give me code for {input}
 """
 
-prompt = PromptTemplate(template=template,input_variables=["history","scenario"])
+prompt = PromptTemplate(template=template,input_variables=["history","input"])
 
 load_dotenv()
 
@@ -27,12 +27,12 @@ memory = ConversationBufferMemory()
 chain = ConversationChain(llm=llm,memory=memory,prompt=prompt,verbose=True)
 
 
-res1 = chain.invoke(input={"scenario":"write python program for finding a prime number"})
+res1 = chain.invoke(input="write python program for finding a prime number")
 print(res1)
-res2 = chain.invoke(input={"scenario":"write python program for finding a amstrong number"})
+res2 = chain.invoke(input="write python program for finding a amstrong number")
 print(res2)
 
-res3 = chain.invoke(input={"scenario":"write a c program for adding 2 numbers and give me the programing language name i asked you to write prime number code in"})
+res3 = chain.invoke(input="write a c program for adding 2 numbers and give me the programing language name i asked you to write prime number code in")
 print(res3)
 
 print(memory.buffer)
