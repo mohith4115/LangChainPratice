@@ -26,7 +26,7 @@ llm = AzureOpenAI(
     api_key=os.getenv("OPEN_API_KEY"),
     temperature=0,
     model=os.getenv("MODEL_NAME"),
-    api_version=os.getenv("api-version"),
+    api_version=os.getenv("api_version"),
     max_tokens=4096
 )
 
