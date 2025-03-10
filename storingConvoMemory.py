@@ -1,9 +1,11 @@
 from langchain_openai import AzureChatOpenAI
 from langchain.chains.conversation.base import ConversationChain
-from langchain.memory import ConversationBufferMemory
+from langchain.memory import ConversationBufferMemory,ConversationBufferWindowMemory,ConversationTokenBufferMemory,ConversationSummaryBufferMemory
 import os
 from langchain_core.prompts import PromptTemplate
 from dotenv import load_dotenv
+
+### we can send only history and one input to conversationchain
 
 template = """
     this is the "conversation history : {history}
@@ -23,6 +25,15 @@ llm = AzureChatOpenAI(
     max_tokens=4096
 )
 memory = ConversationBufferMemory()
+
+#k represents how many recent ai,human chat history has to be saved in memory or context
+# memory = ConversationBufferWindowMemory(k=2)
+
+#context limit by number of tokens (100 in this case)
+# memory = ConversationTokenBufferMemory(llm=llm,max_token_limit=100)
+
+#it uses the llm to create a summary for the previous conversations if the token limit is exceded else it stores the whole chat till the token limit (400 in this case)
+# memory = ConversationSummaryBufferMemory(llm=llm,max_token_limit=400)
 
 chain = ConversationChain(llm=llm,memory=memory,prompt=prompt,verbose=True)
 
