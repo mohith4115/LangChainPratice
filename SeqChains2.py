@@ -17,11 +17,9 @@ llm = AzureChatOpenAI(
 )
 
 
-# Load environment variables from .env
 load_dotenv()
 
 
-# Define prompt templates (no need for separate Runnable chains)
 prompt_template = ChatPromptTemplate.from_messages(
     [
         ("system", "You are a facts expert who knows facts about {animal}."),
@@ -29,12 +27,11 @@ prompt_template = ChatPromptTemplate.from_messages(
     ]
 )
 
-# Create the combined chain using LangChain Expression Language (LCEL)
+# Create the combined chain using LangChain Expression Language
+#StrOutputParser() returns content for output
 chain = prompt_template | llm | StrOutputParser()
-# chain = prompt_template | model
 
-# Run the chain
+
 result = chain.invoke({"animal": "elephant", "fact_count": 1})
 
-# Output
 print(result)
