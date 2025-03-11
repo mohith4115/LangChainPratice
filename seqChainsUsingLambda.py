@@ -2,7 +2,8 @@ from dotenv import load_dotenv
 from langchain.prompts import ChatPromptTemplate
 from langchain.schema.output_parser import StrOutputParser
 from langchain.schema.runnable import RunnableLambda
-from langchain_openai import ChatOpenAI
+from langchain_openai import AzureChatOpenAI
+import os
 
 load_dotenv()
 
@@ -35,7 +36,7 @@ translation_template = ChatPromptTemplate.from_messages(
 count_words = RunnableLambda(lambda x: f"Word count: {len(x.split())}\n{x}")
 # prepare_for_translation = RunnableLambda(lambda output: {"text": output, "language": "french"})
 
-# we can use a normal function as well upto us
+# we can use a normal function as well upto us but not recommended
 def prepare_for_translation(output):
     return {"text": output, "language": "french"}
 
