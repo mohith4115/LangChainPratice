@@ -47,7 +47,7 @@ seasoning = ChatPromptTemplate.from_messages(
 starter = ChatPromptTemplate.from_messages(
     [
         ("system","you are a head cook for a big family"),
-        ("human","suggest the starter that goes well with this :{dish} and process:{process}")
+        ("human","suggest the starter that goes well with this process:{process}")
     ]
 )
 
@@ -55,7 +55,7 @@ curryOutput = RunnableLambda(lambda dish:  {"dish":dish})
 ingredientsOutput = RunnableLambda(lambda ingredients:  {"ingredients":ingredients})
 processOutput = RunnableLambda(lambda process:  {"process":process})
 seasoningPrompt = RunnableLambda(lambda x: seasoning.format_prompt(process=x["process"]))
-starterPrompt = RunnableLambda(lambda x: starter.format_prompt(process=x["process"],dish=x["dish"]))
+starterPrompt = RunnableLambda(lambda x: starter.format_prompt(process=x["process"]))
 
 def debug_print(stage):
     return RunnableLambda(lambda x: print(f"\n=== {stage} Output ===\n{x}") or x)
