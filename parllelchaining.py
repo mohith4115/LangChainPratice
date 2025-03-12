@@ -51,6 +51,9 @@ starter = ChatPromptTemplate.from_messages(
     ]
 )
 
+
+#these runnable lambdas are required as next prompt template excepts dict 
+
 curryOutput = RunnableLambda(lambda dish: {"dish": dish})
 ingredientsOutput = RunnableLambda(lambda ingredients: {"ingredients": ingredients})
 processOutput = RunnableLambda(lambda process: {"process": process})
